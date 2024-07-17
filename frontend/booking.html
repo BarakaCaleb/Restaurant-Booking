@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Table</title>
+  <link href="https://unpkg.com/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+  <header class="bg-gray-800 text-white p-4">
+    <h1 class="text-3xl">Book a Table</h1>
+  </header>
+  <main class="p-4">
+    <form id="booking-form" class="bg-white p-4 rounded shadow">
+      <div class="mb-4">
+        <label for="date" class="block text-gray-700">Date and Time</label>
+        <input type="datetime-local" id="date" class="border p-2 w-full">
+      </div>
+      <div class="mb-4">
+        <label for="table_number" class="block text-gray-700">Table Number</label>
+        <input type="number" id="table_number" class="border p-2 w-full">
+      </div>
+      <button type="submit" class="bg-blue-500 text-white p-2 rounded">Book</button>
+    </form>
+  </main>
+  <script>
+    document.getElementById('booking-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const date = document.getElementById('date').value;
+      const table_number = document.getElementById('table_number').value;
+      const user_id = 1; // Assuming user ID is 1 for now
+
+      fetch('http://127.0.0.1:5000/booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ user_id, date, table_number })
+      })
+      .then(response => response.json())
+      .then(data => alert(data.message));
+    });
+  </script>
+</body>
+</html>

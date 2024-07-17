@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu</title>
+  <link href="https://unpkg.com/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+  <header class="bg-gray-800 text-white p-4">
+    <h1 class="text-3xl">Menu</h1>
+  </header>
+  <main class="p-4">
+    <div id="menu" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  </main>
+  <script>
+    fetch('http://127.0.0.1:5000/dishes')
+      .then(response => response.json())
+      .then(data => {
+        const menuDiv = document.getElementById('menu');
+        data.forEach(dish => {
+          const dishDiv = document.createElement('div');
+          dishDiv.className = 'bg-white p-4 rounded shadow';
+          dishDiv.innerHTML = `
+            <h2 class="text-xl font-bold">${dish.name}</h2>
+            <p>${dish.description}</p>
+            <p class="text-gray-500">$${dish.price}</p>
+          `;
+          menuDiv.appendChild(dishDiv);
+        });
+      });
+  </script>
+</body>
+</html>
